@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.newbie.mapper.NewbieProductMapper">
+
+    <select id="selectAll" resultType="org.jeecg.modules.newbie.vo.NewbieListProductVo">
+        SELECT
+            np.id AS productId,
+            np.name AS productName,
+            if(nb.is_deleted = 0, nb.id, null) AS brandId,
+            if(nb.is_deleted = 0, nb.name, null) AS brandName,
+            if(nc.is_deleted = 0, nc.id, null) AS categoryId,
+            if(nc.is_deleted = 0, nc.name, null) AS categoryName,
+            np.create_time AS createTime
+        FROM newbie_product np
+        LEFT JOIN newbie_brand nb ON np.brand_id = nb.id
+        LEFT JOIN newbie_category nc ON np.category_id = nc.id
+        WHERE np.is_deleted = 0
+        ORDER BY np.name asc;
+    </select>
+
+    <!--    <select id="selectById" resultType="org.jeecg.modules.newbie.vo.NewbieListProductVo">
+            SELECT
+            np.id AS id, np.name AS productName,
+            nb.name AS brandName, nc.name AS categoryName,
+            np.create_time AS createTime
+            FROM newbie_product np
+            LEFT JOIN newbie_brand nb ON np.brand_id = nb.id
+            LEFT JOIN newbie_category nc ON np.category_id = nc.id
+            WHERE np.is
+            ORDER BY np.name ASC
+        </select>-->
+
+</mapper>

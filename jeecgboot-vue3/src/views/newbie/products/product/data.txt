@@ -1,0 +1,20 @@
+dataSource: [
+    {
+        key: '1',
+        name: '青岛啤酒·经典500ml',
+        brand: '青岛啤酒',
+        category: '瓶装',
+    },
+    {
+        key: '2',
+        name: '青岛啤酒·易拉罐',
+        brand: '青岛啤酒',
+        category: '易拉罐',
+    },
+    {
+        key: '3',
+        name: '崂山啤酒·冰爽',
+        brand: '崂山啤酒',
+        category: '瓶装',
+    },
+],

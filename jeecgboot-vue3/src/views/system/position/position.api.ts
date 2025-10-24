@@ -21,8 +21,11 @@ export const getImportUrl = Api.importExcel;
  * 查询列表
  * @param params
  */
-export const getPositionList = (params) => {
-  return defHttp.get({ url: Api.list, params });
+export const getPositionList = async (params) => {
+
+  const obj = await defHttp.get({ url: Api.list, params });
+  console.log("------------------------------- getPositionList obj:", obj);
+  return obj;
 };
 
 /**
