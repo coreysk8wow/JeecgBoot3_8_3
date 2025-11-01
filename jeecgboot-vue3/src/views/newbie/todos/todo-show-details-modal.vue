@@ -142,16 +142,18 @@
 				align-items: center;
 			"
 		>
-			<div>
-				<a-textarea
-					v-model:value="tableData.comment"
-					placeholder="审批意见，最多100字。"
-					:rows="4"
-					:maxlength="100"
-					style="width: 400px"
-					:disabled="!isUpdate"
-				/>
-			</div>
+            <div style="display: flex; gap: 12px;">
+                <span style="white-space: nowrap;">审批意见：</span>
+                <a-textarea
+                    v-model:value="tableData.comment"
+                    placeholder="审批意见，最多100字。"
+                    :rows="4"
+                    :maxlength="100"
+                    style="width: 400px; color: #000;"
+                    :disabled="!isUpdate"
+                />
+            </div>
+            
 			<div
 				v-if="isUpdate"
 				style="display: flex; flex-direction: column; gap: 10px; margin-left: 30px"
