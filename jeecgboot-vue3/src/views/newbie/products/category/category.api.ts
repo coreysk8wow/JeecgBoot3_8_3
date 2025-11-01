@@ -1,5 +1,5 @@
 import { defHttp } from "/@/utils/http/axios";
-import { ICategory, IPageParams } from "@/views/newbie/models/entities/product-entity";
+import { ICategory, IPageParams } from "/@/views/newbie/models/entities/product-intf";
 
 enum Api {
 	getAllByPage = "/newbie/category/getAllByPage",

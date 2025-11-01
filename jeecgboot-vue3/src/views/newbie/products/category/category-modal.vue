@@ -17,7 +17,7 @@ import { useForm, BasicForm } from "/@/components/Form";
 import { ref, unref, computed } from "vue";
 import { formSchemas } from "./category.data";
 import { getById, updateCategoryById, addCategory } from "./category.api";
-import { ICategory } from "@/views/newbie/models/entities/product-entity";
+import { ICategory } from "/@/views/newbie/models/entities/product-intf";
 
 // 声明Emits
 const emit = defineEmits(["success", "register"]);

@@ -17,7 +17,7 @@ import { useForm, BasicForm } from "/@/components/Form";
 import { ref, unref, computed } from "vue";
 import { formSchemas } from "./brand.data";
 import { getById, updateBrandById, addBrand } from "./brand.api";
-import { IBrand } from "@/views/newbie/models/entities/product-entity";
+import { IBrand } from "/@/views/newbie/models/entities/product-intf";
 
 // 声明Emits
 const emit = defineEmits(["success", "register"]);

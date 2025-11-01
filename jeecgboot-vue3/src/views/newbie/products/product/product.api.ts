@@ -1,4 +1,4 @@
-import { IPageParams, IProduct } from "@/views/newbie/models/entities/product-entity";
+import { IPageParams, IProduct } from "/@/views/newbie/models/entities/product-intf";
 import { defHttp } from "/@/utils/http/axios";
 
 enum Api {

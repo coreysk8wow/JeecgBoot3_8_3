@@ -1,4 +1,4 @@
-package org.jeecg.modules.newbie.vo;
+package org.jeecg.modules.newbie.model.vo;
 
 import lombok.Data;
 

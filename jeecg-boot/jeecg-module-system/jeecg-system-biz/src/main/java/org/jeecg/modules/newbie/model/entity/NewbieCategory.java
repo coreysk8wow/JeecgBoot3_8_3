@@ -1,7 +1,8 @@
-package org.jeecg.modules.newbie.entity;
+package org.jeecg.modules.newbie.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +43,7 @@ public class NewbieCategory {
     @Schema(description = "修改时间")
     private java.util.Date updateTime;
 
+    @TableLogic
     @Schema(description = "是否删除, 0未删除 1已删除")
     private Integer isDeleted;
 }

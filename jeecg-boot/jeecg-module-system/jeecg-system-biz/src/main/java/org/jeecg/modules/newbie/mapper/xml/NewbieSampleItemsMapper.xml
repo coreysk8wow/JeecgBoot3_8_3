@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.newbie.mapper.NewbieSampleItemsMapper">
+
+    <select id="selectAllItemsByReqId"
+            parameterType="java.lang.String"
+            resultType="org.jeecg.modules.newbie.model.vo.NewbieSampleItemVo">
+        SELECT
+            nsi.ordinal,
+            nb.name AS brandName,
+            nc.name AS categoryName,
+            np.name AS productName,
+            nsi.qty_box,
+            nsi.qty_order
+        FROM
+            newbie_sample_items AS nsi
+        LEFT JOIN
+            newbie_category AS nc
+        ON
+            nsi.category_id = nc.id
+        LEFT JOIN
+            newbie_brand AS nb
+        ON
+            nsi.brand_id = nb.id
+        LEFT JOIN
+            newbie_product AS np
+        ON
+            nsi.product_id = np.id
+        WHERE
+            nsi.req_id = #{reqId}
+        AND nsi.is_deleted = 0 AND nc.is_deleted = 0 AND nb.is_deleted = 0
+        ORDER BY nsi.ordinal ASC
+    </select>
+
+</mapper>

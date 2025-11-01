@@ -1,16 +1,18 @@
 package org.jeecg.modules.newbie.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.modules.newbie.entity.NewbieProduct;
+import org.jeecg.modules.newbie.model.entity.NewbieProduct;
 import org.jeecg.modules.newbie.service.INewbieProductService;
-import org.jeecg.modules.newbie.vo.NewbieListProductVo;
+import org.jeecg.modules.newbie.model.vo.NewbieListProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/newbie/product")
@@ -39,23 +41,6 @@ public class NewbieProductController {
             return result;
         }
     }
-
-/*    @Operation(summary = "获取产品By ID")
-    @GetMapping(value = "/getById/{id}")
-    public Result<NewbieListProductVo> getById(@PathVariable String id) {
-        Result<NewbieListProductVo> result = new Result<>();
-        try {
-            NewbieListProductVo byId = newbieProductService.getById(id);
-            result.success("Success");
-            result.setResult(byId);
-            return result;
-        } catch (Exception e) {
-            log.error("Error fetching categories by page", e);
-            result.setSuccess(false);
-            result.setMessage("Error fetching categories: " + e.getMessage());
-            return result;
-        }
-    }*/
 
     @Operation(summary = "更新产品By ID")
     @PutMapping(value = "/updateById")
@@ -113,4 +98,32 @@ public class NewbieProductController {
 
         return Result.ok("删除成功!");
     }
+
+    @Operation(summary = "通过品类ID和品牌ID获取产品列表")
+    @GetMapping(value = "/getByCategoryAndBrand/{categoryId}/{brandId}")
+    public Result<List<NewbieProduct>> getProductsByCaterogyAndBrand(
+            @PathVariable String categoryId,
+            @PathVariable String brandId) {
+
+        Result<List<NewbieProduct>> result = new Result<>();
+
+        try {
+            LambdaQueryWrapper<NewbieProduct> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(NewbieProduct::getCategoryId, categoryId);
+            queryWrapper.eq(NewbieProduct::getBrandId, brandId);
+            queryWrapper.eq(NewbieProduct::getIsDeleted, 0);
+            List<NewbieProduct> newbieProductList =
+                    newbieProductService.getBaseMapper().selectList(queryWrapper);
+
+            result.setSuccess(true);
+            result.setResult(newbieProductList);
+        } catch (Exception e) {
+            log.error("Error fetching products by category and brand", e);
+            result.error500("Error fetching products: " + e.getMessage());
+            return result;
+        }
+
+        return result;
+    }
+
 }

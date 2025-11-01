@@ -1,8 +1,8 @@
-package org.jeecg.modules.newbie.entity;
+package org.jeecg.modules.newbie.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,21 +12,31 @@ import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-@TableName("newbie_brand")
+@TableName("newbie_product")
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-@Schema(description="新手村品牌表")
-public class NewbieBrand {
+@Schema(description="新手村产品表")
+public class NewbieProduct {
     @TableId(type = IdType.ASSIGN_ID)
     @Schema(description = "id")
     private String id;
 
     /**
-     * 品牌名称
+     * 产品名称
      */
-    @Schema(description = "品牌名称")
-    @TableField("name")
+    @Schema(description = "产品名称")
     private String name;
+
+    /**
+     * 品牌ID
+     */
+    @Schema(description = "品牌ID")
+    private String brandId;
+
+    /**
+     * 品类ID
+     */
+    @Schema(description = "品类ID")
+    private String categoryId;
 
     /**
      * 创建时间
@@ -44,6 +54,7 @@ public class NewbieBrand {
     @Schema(description = "修改时间")
     private java.util.Date updateTime;
 
+    @TableLogic
     @Schema(description = "是否删除, 0未删除 1已删除")
     private Integer isDeleted;
 }

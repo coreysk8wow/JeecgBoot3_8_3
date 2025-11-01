@@ -28,7 +28,7 @@ import { BasicModal, useModalInner } from "/@/components/Modal";
 import { computed, onMounted, Ref, ref, unref } from "vue";
 import { addProduct, updateProductById, getAllBrands, getAllCategories } from "./product.api";
 import { message } from 'ant-design-vue';
-import { IProduct } from "@/views/newbie/models/entities/product-entity";
+import { IProduct } from "/@/views/newbie/models/entities/product-intf";
 import { Nullable } from '@/views/newbie/types/basic-type'
 
 // 声明Emits

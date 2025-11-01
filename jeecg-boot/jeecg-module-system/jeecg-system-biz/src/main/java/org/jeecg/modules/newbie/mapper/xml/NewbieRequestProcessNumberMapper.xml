@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.newbie.mapper.NewbieRequestProcessNumberMapper">
+    <sql id="columns">
+        id, req_dept, req_date, seq, create_time, update_time, is_deleted
+    </sql>
+
+    <select id="seleteMaxSeqByDeptAndDateForUpdate"
+            resultType="Integer">
+        SELECT
+            MAX(seq) AS maxSeq
+        FROM
+            newbie_request_process_number
+        WHERE
+            req_dept = #{reqDept} AND req_date = #{reqDate}
+        FOR UPDATE
+    </select>
+</mapper>

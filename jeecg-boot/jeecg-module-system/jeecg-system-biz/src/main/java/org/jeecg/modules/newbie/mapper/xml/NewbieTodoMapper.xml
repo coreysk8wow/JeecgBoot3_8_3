@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.newbie.mapper.NewbieTodoMapper">
+
+    <select id="selectTodos" resultType="org.jeecg.modules.newbie.model.vo.NewbieTodoVo">
+        SELECT
+            nsr.id AS reqId,
+            nsr.title AS reqTitle,
+            nsr.requester AS requester,
+            nsr.req_dept AS reqDept,
+            nsr.req_date AS reqDate,
+            nrt.category AS category,
+            nsr.status AS statusCode
+        FROM
+            newbie_request_todo nrt
+        INNER JOIN
+            newbie_sample_request nsr
+        ON
+            nrt.req_id = nsr.id
+        <if test="status != null and status != ''">
+            WHERE nsr.status = #{status}
+        </if>
+        <if test="category != null and category != ''">
+            WHERE nrt.category = #{category}
+        </if>
+        AND nsr.is_deleted = 0
+        AND nrt.is_deleted = 0
+        ORDER BY
+            nsr.status asc, nsr.req_date desc
+    </select>
+
+</mapper>
