@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { defHttp } from "/@/utils/http/axios";
 
 enum Api {
