@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.newbie.mapper.NewbieOrderMapper">
+    <select id="getAllOrders"
+            resultType="org.jeecg.modules.newbie.model.vo.NewbieOrderListVo">
+        SELECT
+            no.id AS id,
+            no.order_no AS orderNo,
+            nsr.requester AS requester,
+            nsr.proc_no AS procNo,
+            np.name AS productName,
+            nsi.qty_box AS qtyBox,
+            no.create_time AS createTime
+        FROM
+            newbie_order AS no
+        INNER JOIN
+            newbie_sample_request nsr
+        ON
+            no.req_id = nsr.id
+        INNER JOIN
+            newbie_sample_items nsi
+        ON
+            no.item_id = nsi.id
+        INNER JOIN
+            newbie_product np
+        ON
+            nsi.product_id = np.id
+        <where>
+            <if test="searchDto.procNo != null and searchDto.procNo != ''">
+                AND nsr.proc_no like CONCAT('%',#{searchDto.procNo},'%')
+            </if>
+            <if test="searchDto.orderNo != null and searchDto.orderNo != ''">
+                AND no.order_no like CONCAT('%',#{searchDto.orderNo},'%')
+            </if>
+            <if test="searchDto.beginDate != null and searchDto.beginDate != ''">
+                AND no.create_time >= #{searchDto.beginDate}
+            </if>
+            <if test="searchDto.endDate != null and searchDto.endDate != ''">
+                AND no.create_time &lt;= #{searchDto.endDate}
+            </if>
+            AND no.is_deleted = 0
+            AND nsr.is_deleted = 0
+            AND nsi.is_deleted = 0
+            AND np.is_deleted = 0
+        </where>
+        ORDER BY
+            no.create_time desc
+    </select>
+</mapper>

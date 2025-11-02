@@ -7,6 +7,7 @@ import org.jeecg.modules.newbie.model.dto.NewbieRequestSampleFormDto;
 import org.jeecg.modules.newbie.model.entity.NewbieRequestSample;
 import org.jeecg.modules.newbie.model.entity.NewbieTodo;
 import org.jeecg.modules.newbie.model.vo.NewbieRequestSampleVo;
+import org.jeecg.modules.newbie.service.INewbieOrderService;
 import org.jeecg.modules.newbie.service.INewbieRequestSampleService;
 import org.jeecg.modules.newbie.service.INewbieTodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class NewbieRequestSampleController {
 
     @Autowired
     private INewbieTodoService newbieTodoService;
+
+    @Autowired
+    private INewbieOrderService newbieOrderService;
 
     @Transactional
     @Operation(summary = "保存样品领用申请单")
@@ -79,7 +83,7 @@ public class NewbieRequestSampleController {
                     newbieRequestSampleService.getRequestById(reqId);
 
             result.setResult(requestSampleVo);
-            result.success("获取样品领用申请单成功");
+//            result.success("获取样品领用申请单成功");
         } catch (Exception e) {
             log.error("Error fetching request by id", e);
             result.error500("获取样品领用申请单失败" + e.getMessage());
@@ -95,7 +99,6 @@ public class NewbieRequestSampleController {
         Result<String> result = new Result<>();
         try {
             newbieRequestSampleService.updateRequestStatus(requestSample);
-            result.success("更新样品领用申请单状态成功");
         } catch (Exception e) {
             log.error("Error updating request status", e);
             result.error500("更新样品领用申请单状态失败" + e.getMessage());
@@ -103,16 +106,26 @@ public class NewbieRequestSampleController {
         }
 
         /*
-            审批通过后，生成订单，有以下3种方式保证数据一致性：
+            审批通过后，生成订单，有以下3种方式保：
                 方法1: 消息队列（异步，最终一致）
                 方法2: 定时任务扫描（异步，最终一致）
                 方法3: 本地事务（同步，全局一致）
             此处为了简单，采用本地事务方式。
          */
-        
+        try {
+            newbieOrderService.createOrders(requestSample);
+        } catch (Exception e) {
+            log.error("Error creating orders after request approval", e);
+            result.error500("审批通过后生成订单失败" + e.getMessage());
+            return result;
+        }
+
+        String successMessage = "更新样品领用申请单状态成功。";
+        if (requestSample.getStatus() != null && requestSample.getStatus() == 1) {
+            successMessage += "已生成相应订单。";
+        }
+        result.success(successMessage);
 
         return result;
     }
-
-
 }

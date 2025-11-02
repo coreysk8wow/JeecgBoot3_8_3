@@ -5,8 +5,7 @@
         id, req_dept, req_date, seq, create_time, update_time, is_deleted
     </sql>
 
-    <select id="seleteMaxSeqByDeptAndDateForUpdate"
-            resultType="Integer">
+    <select id="seleteMaxSeqByDeptAndDateForUpdate" resultType="Integer">
         SELECT
             MAX(seq) AS maxSeq
         FROM

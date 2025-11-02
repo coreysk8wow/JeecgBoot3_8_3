@@ -45,6 +45,7 @@ const { tableContext } = useListPage({
 			column: "createTime",
 			order: "ascend",
 		},
+        showActionColumn: true
 	},
 });
 // BasicTable绑定注册

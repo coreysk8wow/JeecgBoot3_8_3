@@ -7,13 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @TableName("newbie_product")
-@EqualsAndHashCode(callSuper = false)
 @Schema(description="新手村产品表")
 public class NewbieProduct {
     @TableId(type = IdType.ASSIGN_ID)

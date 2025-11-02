@@ -25,7 +25,7 @@ public class NewbieProductController {
     @GetMapping(value = "/getAllByPage")
     public Result<IPage<NewbieListProductVo>> getAllCategoriesByPage(
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize) {
+            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
 
         Result<IPage<NewbieListProductVo>> result = new Result<>();
         try {

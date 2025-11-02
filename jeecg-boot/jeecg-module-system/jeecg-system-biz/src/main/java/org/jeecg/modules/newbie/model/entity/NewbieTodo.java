@@ -7,12 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @TableName("newbie_request_todo")
-@EqualsAndHashCode(callSuper = false)
 @Schema(description="新手村-待办事项表")
 public class NewbieTodo {
 

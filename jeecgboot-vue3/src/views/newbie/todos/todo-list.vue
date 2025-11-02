@@ -30,24 +30,7 @@ const { tableContext } = useListPage({
 		pagination: {
 			pageSize: 3,
 		},
-		defSort: [
-			{
-				column: "status",
-				order: "asc",
-			},
-			{
-				column: "reqDate",
-				order: "desc",
-			},
-			{
-				column: "reqDept",
-				order: "asc",
-			},
-			{
-				column: "requester",
-				order: "asc",
-			},
-		],
+        showActionColumn: true
 	},
 });
 // BasicTable绑定注册

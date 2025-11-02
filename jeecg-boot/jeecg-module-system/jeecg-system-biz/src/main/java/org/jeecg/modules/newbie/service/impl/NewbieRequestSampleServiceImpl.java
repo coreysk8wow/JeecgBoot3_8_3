@@ -58,17 +58,17 @@ public class NewbieRequestSampleServiceImpl
                 .toLocalDate();
         final String reqDateStr = reqDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-        // Lock the row for update
+        // 获取最近使用的流程单号序列号，并加锁以防并发冲突
         Integer maxSeq =
                 requestProcessNumberMapper.seleteMaxSeqByDeptAndDateForUpdate(reqDeptStr, reqDateStr);
+        if (maxSeq == null) {
+            maxSeq = 0;
+        } else if (maxSeq >= 999) {
+            throw new RuntimeException("流程单号序列超出限制，部门：" + reqDeptStr + "，日期：" + reqDateStr);
+        }
 
         // 生成新的流程单号
-        String seqStr;
-        if (maxSeq == null) {
-            seqStr = "001";
-        } else {
-            seqStr = String.format("%03d", ++maxSeq);
-        }
+        final String seqStr = String.format("%03d", ++maxSeq);
         String newProcessNumber =
                 reqDeptStr + "-" + reqDateStr + "-" + seqStr;
 
@@ -163,8 +163,6 @@ public class NewbieRequestSampleServiceImpl
 
     /**
      * 更新样品领用申请单状态
-     * @param reqId
-     * @param status
      */
     @Override
     public void updateRequestStatus(NewbieRequestSample requestSample) {

@@ -3,16 +3,11 @@ package org.jeecg.modules.newbie.model.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @TableName("newbie_sample_items")
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @Schema(description="新手村-样品清单表实体")
 public class NewbieSampleItem {
     @TableId(type = IdType.ASSIGN_ID)

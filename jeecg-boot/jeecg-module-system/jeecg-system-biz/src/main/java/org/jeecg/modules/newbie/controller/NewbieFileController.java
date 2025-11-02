@@ -115,8 +115,6 @@ public class NewbieFileController {
             }
 
             Path path = Paths.get(file.getAbsolutePath());
-            Resource resource = new UrlResource(path.toUri());
-
             String contentType = Files.probeContentType(path);
             if (contentType == null) {
                 contentType = "application/vnd.ms-excel";
@@ -126,7 +124,6 @@ public class NewbieFileController {
 
             String fileName = URLEncoder.encode(file.getName(), "UTF-8");
             response.setHeader("Content-disposition", "attachment;filename=" + fileName);
-            //response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             response.setContentLengthLong(file.length());
 
             // 读取文件并写入响应流
@@ -139,7 +136,6 @@ public class NewbieFileController {
                 out.write(buffer, 0, length);
             }
             out.flush();
-
         } catch (IOException e) {
             log.error("Error downloading file", e);
             throw new RuntimeException(e);

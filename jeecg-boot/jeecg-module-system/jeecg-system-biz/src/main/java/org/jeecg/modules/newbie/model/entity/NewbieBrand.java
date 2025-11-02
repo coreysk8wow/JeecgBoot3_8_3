@@ -4,14 +4,10 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @TableName("newbie_brand")
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @Schema(description="新手村品牌表")
 public class NewbieBrand {
     @TableId(type = IdType.ASSIGN_ID)

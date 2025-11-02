@@ -223,12 +223,6 @@ const [selectUserForm, { getFieldsValue }] = useForm({
 	showActionButtonGroup: false,
 });
 
-/* const [uploadFileForm] = useForm({
-	//labelWidth: 150,
-	schemas: uploadFileFormSchemas,
-	showActionButtonGroup: false,
-}); */
-
 function handleSubmit() {
 	const values = getFieldsValue();
 	console.log("----- submit values:", values);
