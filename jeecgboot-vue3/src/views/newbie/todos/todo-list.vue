@@ -30,6 +30,7 @@ const { tableContext } = useListPage({
 		pagination: {
 			pageSize: 5,
 		},
+        // 是否显示操作列
         showActionColumn: true
 	},
 });

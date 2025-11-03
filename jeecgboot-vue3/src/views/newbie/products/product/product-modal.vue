@@ -55,7 +55,7 @@ const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data
 });
 
 //设置标题
-const getTitle = computed(() => (!unref(isUpdate) ? "新增品类" : "编辑品类"));
+const getTitle = computed(() => (!unref(isUpdate) ? "新增产品" : "编辑产品"));
 
 let selectedProductId: Nullable<string>;
 const selectedProductName: Ref<Nullable<string>> = ref();

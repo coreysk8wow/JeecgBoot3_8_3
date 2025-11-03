@@ -22,6 +22,7 @@ const { tableContext } = useListPage({
 		pagination: {
 			pageSize: 10,
 		},
+        // 是否显示操作列
 		showActionColumn: false,
 		formConfig: {
 			schemas: searchFormSchema,
