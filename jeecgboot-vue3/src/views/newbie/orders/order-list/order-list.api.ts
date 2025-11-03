@@ -7,21 +7,34 @@ enum Api {
 export function getOrdersByPage(params) {
     console.log("-----getOrdersByPage()  API called with params:", params);
 
-    let modifiedParams = params;
-
+    const searchParamsBody = {
+        procNo: params.procNo, 
+        orderNo: params.orderNo,
+        beginDate: undefined,
+        endDate: undefined,
+    }
     if (params.createTime !== undefined && params.createTime !== null && params.createTime !== '') {
         const [beginDateStr, endDateStr] = params.createTime.split(',');
         const beginDate = beginDateStr ? beginDateStr.trim() : undefined;
         const endDate = endDateStr ? endDateStr.trim() : undefined;
-        modifiedParams = {
-            ...params,
-            beginDate: beginDate, 
-            endDate: endDate,
-        };
+        searchParamsBody.beginDate = beginDate;
+        searchParamsBody.endDate = endDate;
     }
+    console.log("-----Modified params for API call:", searchParamsBody);
 
-    console.log("-----Modified params for API call:", modifiedParams);
+    const reqParams = {
+        pageNo: params.pageNo,
+        pageSize: params.pageSize,
+    };
 
-	return defHttp.post({ url: Api.getOrdersByPage, params: modifiedParams });
+	return defHttp.post({ 
+        url: Api.getOrdersByPage, 
+
+        // 对应SpringBoot controller的@RequestParam
+        params: reqParams, 
+        
+        // 对应SpringBoot controller的@RequestBody
+        data: searchParamsBody 
+    });
 
 }

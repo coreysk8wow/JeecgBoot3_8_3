@@ -194,28 +194,26 @@
 </template>
 
 <script lang="ts" name="newbie-request-sample" setup>
-import { useForm, BasicForm } from "/@/components/Form";
-import { selectUserFormSchemas } from "./sample.data";
-import { ref, computed, onMounted, unref } from "vue";
-import type { Ref } from "vue";
-import {
-	columns,
-	itemCategoryOptions,
-	brandOptions,
-	categoryOptions,
-	productOptions,
-} from "./sample.data";
 import { IFormData, IReqItem } from "@/views/newbie/models/entities/sample-request-intf";
-import {
-	getAllBrands,
-	getAllCategories,
-	getProductsByCategoryAndBrand,
-	submitRequest,
-} from "./sample.api";
+import { validatePhone } from "@/views/newbie/validators/phone-number-validator";
+import { message } from "ant-design-vue";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { message } from "ant-design-vue";
-import { uploadFile } from "./sample.api";
+import type { Ref } from "vue";
+import { computed, onMounted, ref, unref } from "vue";
+import {
+    getAllBrands,
+    getAllCategories,
+    getProductsByCategoryAndBrand,
+    submitRequest,
+    uploadFile,
+} from "./sample.api";
+import {
+    brandOptions,
+    categoryOptions, columns,
+    itemCategoryOptions, productOptions, selectUserFormSchemas
+} from "./sample.data";
+import { BasicForm, useForm } from "/@/components/Form";
 import { router } from "/@/router";
 
 const [selectUserForm, { getFieldsValue }] = useForm({
@@ -261,26 +259,35 @@ function validateFormData(): boolean {
 		message.error("标题不能为空");
 		return false;
 	}
+
 	if (!formData.value.requester) {
 		message.error("申请人不能为空");
 		return false;
 	}
+
 	if (!formData.value.reqDept) {
 		message.error("申请部门不能为空");
 		return false;
 	}
+
 	if (!formData.value.reqDate) {
 		message.error("申请日期不能为空");
 		return false;
 	}
+
 	if (!formData.value.itemCategory) {
 		message.error("领用类型不能为空");
 		return false;
 	}
+
 	if (!formData.value.phone) {
 		message.error("联系电话不能为空");
 		return false;
+	} else if (!validatePhone(formData.value.phone)) {
+        message.error("联系电话格式不正确");
+        return false;
 	}
+
 	if (reqItemsDataSource.value.length === 0) {
 		message.error("申请物品清单不能为空");
 		return false;
@@ -299,6 +306,19 @@ function validateFormData(): boolean {
 		message.error("申请物品清单中品牌、品类和产品不能为空, 数量必须大于0。");
 		return false;
 	}
+    
+    
+    const values = getFieldsValue();
+    if (!values || values.name === undefined || values.name === null || values.name === '') {
+        message.error("负责人不能为空");
+        return false;
+    }
+    const nameArr = values.name.split(',');
+    if (nameArr.length > 1) {
+        message.error("仅支持选择一个负责人");
+        return false;
+    }
+
 	return true;
 }
 

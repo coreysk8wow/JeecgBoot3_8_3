@@ -28,7 +28,7 @@ const { tableContext } = useListPage({
 			width: 80,
 		},
 		pagination: {
-			pageSize: 3,
+			pageSize: 5,
 		},
         showActionColumn: true
 	},
